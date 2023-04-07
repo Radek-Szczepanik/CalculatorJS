@@ -16,11 +16,11 @@ window.onload = function() {
             case "←":
                 deleteSign();
             break;
-            case "%":
-                countPercent();
-            break;
             case "π":
                 countPi();
+            break;
+            case "√":
+                countSqrt(value);
             break;
             case "1":
             case "2":
@@ -39,8 +39,8 @@ window.onload = function() {
             case ".":
             case "%":
             case "=":
+            case "^":
             case "√":
-            case "x²":
             case "(":
             case ")":
                 addToDisplay(value);
@@ -51,7 +51,6 @@ window.onload = function() {
     countResult = () => {
         const countResult = math.evaluate(display.value);
         setDisplay(countResult);
-        
     }
 
     clearDisplay = () => {
@@ -63,19 +62,10 @@ window.onload = function() {
         setDisplay(deletedSign);
     }
 
-    countSqrt = (value) => {
-        display.value += value;
-        if (display.value.includes("√")) {
-            const resultSqrt = value.replace("√", "");
-            console.log(value);
-            console.log(resultSqrt);
-            setDisplay(math.sqrt(resultSqrt));
-        }
-        
-    }
-
-    countPercent = () => {
-        
+    countSqrt = (valueToSqrt) => {
+        const resultToSqrt = display.value += valueToSqrt.replace("√", "");
+        const resultSqrt = math.sqrt(resultToSqrt);
+        setDisplay(resultSqrt);
     }
 
     countPi = () => {
@@ -84,22 +74,55 @@ window.onload = function() {
     }
 
     addToDisplay = (clickedSigns) => {
-        if (clickedSigns == "x²") {
-            display.value += "^";
+        if (clickedSigns == "^" && display.value.slice(-1) == "^") {
             return;
         }
         if (clickedSigns == "." && display.value.slice(-1) == ".") {
             return;
         }
+        if (clickedSigns == "%" && display.value.slice(-1) == "%") {
+            return;
+        }
+        if (clickedSigns == "*" && display.value.slice(-1) == "*") {
+            return;
+        }
+        if (clickedSigns == "/" && display.value.slice(-1) == "/") {
+            return;
+        }
+        if (clickedSigns == "+" && display.value.slice(-1) == "+") {
+            return;
+        }
+        if (clickedSigns == "-" && display.value.slice(-1) == "-") {
+            return;
+        }
         if (clickedSigns == "." && display.value == "") {
-            display.value += "0";
+            return;
+        }
+        if (clickedSigns == "+" && display.value == "") {
+            return;
+        }
+        if (clickedSigns == "-" && display.value == "") {
+            return;
+        }
+        if (clickedSigns == "*" && display.value == "") {
+            return;
+        }
+        if (clickedSigns == "/" && display.value == "") {
+            return;
+        }
+        if (clickedSigns == "^" && display.value == "") {
+            return;
+        }
+        if (clickedSigns == "%" && display.value == "") {
+            return;
+        }
+        if (clickedSigns == ")" && display.value == "") {
+            return;
+        }
+        if (clickedSigns == "√" && display.value == "") {
+            return;
         }
         display.value += clickedSigns;
-        if (display.value == "√") {
-            display.value.slice(0, -1);
-            console.log(display.value);
-        }
-
     }
 
     setDisplay = (showResult) => {
